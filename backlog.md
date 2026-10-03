@@ -3,12 +3,12 @@
 Derived from [project_spec.md](./project_spec.md).
 
 ## Phase 1: Setup
-- [ ] Initialize Python 3 project structure (virtualenv, `requirements.txt`) — *(manual)*
-- [ ] Add `.gitignore` covering `.env`, `__pycache__/`, build artifacts, venvs — *(manual)*
-- [ ] Create `.env.example` documenting `JIRA_BASE_URL`, `JIRA_API_TOKEN`, `JIRA_EMAIL`, `JIRA_PROJECT_KEY` — *(manual)*
-- [ ] Implement config loader that reads `.env` and fails fast with a clear error if any required variable is missing — *(manual)*
-- [ ] Create `reports/` output directory for the historical archive — *(manual)*
-- [ ] Decide and scaffold the risks/escalations manual input mechanism (editable input file, per spec section 11) — *(manual)*
+- [ ] Initialize Python 3 project structure (virtualenv, `requirements.txt`) — *(manual)* — [#2](https://github.com/senthilkp1709/module08-task/issues/2)
+- [ ] Add `.gitignore` covering `.env`, `__pycache__/`, build artifacts, venvs — *(manual)* — [#3](https://github.com/senthilkp1709/module08-task/issues/3)
+- [ ] Create `.env.example` documenting `JIRA_BASE_URL`, `JIRA_API_TOKEN`, `JIRA_EMAIL`, `JIRA_PROJECT_KEY` — *(manual)* — [#4](https://github.com/senthilkp1709/module08-task/issues/4)
+- [ ] Implement config loader that reads `.env` and fails fast with a clear error if any required variable is missing — *(manual)* — [#5](https://github.com/senthilkp1709/module08-task/issues/5)
+- [ ] Create `reports/` output directory for the historical archive — *(manual)* — [#6](https://github.com/senthilkp1709/module08-task/issues/6)
+- [ ] Decide and scaffold the risks/escalations manual input mechanism (editable input file, per spec section 11) — *(manual)* — [#1](https://github.com/senthilkp1709/module08-task/issues/1) (duplicate: [#7](https://github.com/senthilkp1709/module08-task/issues/7))
 
 ## Phase 2: Core Features
 - [ ] Implement Jira REST API v3 authenticated session (email + API token) — *(MCP: jira-python, used by all fetch tools)*
