@@ -48,3 +48,18 @@ Derived from [project_spec.md](./project_spec.md).
 - [ ] Document setup steps: installing dependencies, creating `.env` from `.env.example`, preparing the risks input file — *(custom skill: write-documentation.agent.md)*
 - [ ] Document CLI usage with example commands — *(custom skill: write-documentation.agent.md)*
 - [ ] Document the output location, file naming convention, and archiving behavior — *(custom skill: write-documentation.agent.md)*
+
+## Notes: Candidates for GitHub Coding Agent Delegation (Module 19)
+
+Tasks below are well-defined, self-contained coding/scaffolding work with no need for human judgment or live external credentials — good candidates to delegate:
+
+- Phase 1: Initialize Python 3 project structure; Add `.gitignore`; Create `.env.example`; Implement config loader; Create `reports/` output directory
+- Phase 2: All items (Jira session, fetch completed/in-progress/blocked issues, sprint velocity, individual utilization, risks loading, overall status logic, report header/executive summary/footer, full report assembly)
+- Phase 3: Wire CLI command; Monday–Friday calendar week calculation; dated output file naming; new-file-never-overwrite logic; wiring risks file into CLI
+- Phase 4: All unit test items (use mocked Jira responses, no live system needed)
+- Phase 5: All documentation items
+
+**Not suitable for delegation (needs human judgment or live access):**
+- Phase 1: "Decide and scaffold the risks/escalations manual input mechanism" — requires a design decision between CLI prompt vs. input file (see spec section 11)
+- Phase 3: "Perform an end-to-end manual run against a real Jira project..." — requires live Jira credentials and manual verification of output
+
