@@ -1,0 +1,27 @@
+{
+  "name": "@weekly-status/frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "test": "vitest run",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "@weekly-status/contracts": "*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "jsdom": "^26.0.0",
+    "vitest": "^4.1.11"
+  }
+}

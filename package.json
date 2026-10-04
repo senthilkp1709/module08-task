@@ -1,0 +1,29 @@
+{
+  "name": "jira-weekly-status-report",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <23",
+    "npm": ">=10"
+  },
+  "workspaces": [
+    "backend",
+    "frontend",
+    "packages/contracts"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others --names backend,frontend \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "npm run dev --workspace @weekly-status/backend",
+    "dev:frontend": "npm run dev --workspace @weekly-status/frontend",
+    "build": "npm run build --workspace @weekly-status/frontend && npm run build --workspace @weekly-status/backend",
+    "lint": "eslint .",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^16.0.0"
+  }
+}

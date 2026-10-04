@@ -1,0 +1,20 @@
+{
+  "name": "@weekly-status/backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "build": "node --check src/app.js && node --check src/server.js",
+    "test": "node --test",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@weekly-status/contracts": "*",
+    "express": "^5.1.0"
+  }
+}

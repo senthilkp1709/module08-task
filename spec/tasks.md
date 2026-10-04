@@ -4,13 +4,64 @@
 **Requirements:** `spec/specification.md`  
 **Constitution:** `spec/constitution.md`
 
-Tasks are ordered by implementation dependency. Each acceptance criterion is independently verifiable. Jira behavior MUST be tested with deterministic mocked responses; automated tests MUST NOT require live credentials.
+Tasks are grouped by delivery phase, not strict execution order. Follow the dependency-aware, risk-adjusted execution waves below. Start with low-risk, high-gain foundation and pure business-rule validation, then address external Jira uncertainty before committing to downstream integration. Within each wave, independent tasks may proceed in parallel. Each acceptance criterion is independently verifiable. Jira behavior MUST be tested with deterministic mocked responses; automated tests MUST NOT require live credentials.
+
+## Recommended Execution Order
+
+### Wave 1 — Low-risk, high-gain foundations
+
+1. **T001** — Establish the workspace and test scripts.
+2. **T003** — Validate backend configuration and secret boundaries.
+3. **T013** — Implement and test timezone, reporting-week, and status rules as pure functions.
+
+These tasks are relatively bounded and unblock validation or clarify core behavior early. T013 is listed under Phase 4 for domain ownership, but should be implemented in this early wave because it does not depend on Jira, persistence, or UI work.
+
+### Wave 2 — Local runnable baseline and persistence
+
+4. **T002** — Docker Compose stack.
+5. **T004** — Health/readiness and same-origin local setup.
+6. **T005 → T006** — Migrations, then immutable repository.
+
+T005 schema design may be drafted alongside T002, but migration execution and integration tests require PostgreSQL.
+
+### Wave 3 — Resolve external Jira risk, then collect data
+
+7. **T007** — Start with a bounded Jira capability/permissions check for the exact configured project, board, sprint metrics, changelog, flag, and worklog data; record any API limitations before completing the client.
+8. **T008**, then **T009**, **T010**, and **T011** — Implement pagination and source-specific collectors. T009-T011 may proceed in parallel after T007/T008 where their Jira endpoints are independent.
+9. **T012** — Orchestrate all required sources after the individual collectors are verified.
+
+Do not start report endpoint integration until required Jira sources have deterministic success/failure contracts.
+
+### Wave 4 — Normalize and persist the report workflow
+
+10. **T014** — Summary behavior after the domain inputs are stable.
+11. **T015** — Canonical Markdown after source data and domain rules are available.
+12. **T016** — Finalize the API contract against the report and persistence representations.
+13. **T017**, **T018**, and **T019** — Implement generation, read/download, and observability. T018 can proceed after T006/T016 independently of Jira; T019 can start after T004 and be completed with T017.
+
+T016 contract discovery may start in Wave 1, but final schemas must agree with T005/T006 and T015.
+
+### Wave 5 — User experience
+
+14. **T020**, followed by **T021**, **T022**, and **T023** as their APIs become available.
+15. **T024** — Accessibility and browser validation after the primary flows are integrated; run accessibility checks incrementally while building the UI.
+
+### Wave 6 — Release readiness
+
+16. **T025** — Operational verification in an isolated test database/Compose project.
+17. **T026** — Run quality gates continuously throughout delivery and complete the full gate here.
+18. **T027** — Performance measurement using a fixed, documented test profile and representative fixtures.
+19. **T028** — Finalize operator documentation and release review.
+
+If a prerequisite or acceptance criterion fails, stop downstream dependent work, resolve that blocker, then resume. Do not delay low-cost unit/static checks until the end.
 
 ## Phase 1 — Application Foundation and Configuration
 
 ### T001 — Establish frontend and backend workspace
 
 Create or refine the project layout for the Vite frontend, Express backend, shared API contracts, and their tests. Add package scripts for development, build, lint/static checks, and test execution.
+
+**Status:** Implemented; build, lint, and tests pass on Node.js v24.21.0. Verification on the specified Node.js 22 LTS runtime remains pending because it is not installed in the current environment.
 
 **Acceptance criteria**
 
@@ -357,11 +408,11 @@ Document setup, configuration, roster format, operations, migrations, report gen
 
 ## Dependencies
 
-- T001 precedes all implementation tasks.
-- T002-T004 establish the environment for database and API integration.
-- T005 precedes T006; T006 and T012 are required before T017.
-- T007 precedes T008-T012.
-- T009-T012 and T013-T014 precede T015.
-- T015-T17 precede the complete report UI in T020-T023.
-- T025-T028 depend on the delivered app, persistence, Jira flow, and user experience.
-
+- T001 precedes all implementation tasks. T003 and T013 depend on T001 but do not require Docker or Jira.
+- T002 precedes T004 and database integration in T005-T006. T004 also depends on T003 for safe configuration behavior.
+- T005 precedes T006; T006 precedes T017-T018. T017 additionally depends on T012-T016.
+- T003 precedes T007 and the Jira collectors. T007 precedes T008; T008 precedes T009 and T011. T010 depends on T007 and configured board/field settings. T009-T011 precede T012.
+- T012, T013, and T014 precede T015. T015 and T006 inform final T016 contract schemas. T016 precedes T017-T018.
+- T004, T007, and T017 inform completion of T019.
+- T016 and T017 precede T020-T021. T018 precedes T022-T023. T020 precedes T021-T024; T021-T023 precede final T024 sign-off.
+- T025 depends on T002, T005-T006, and T017. T026 runs continuously and has a final completion gate after implementation. T027 depends on an integrated report flow and documented test profile. T028 is last and depends on verified app operations and quality results.

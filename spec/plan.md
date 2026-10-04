@@ -19,6 +19,18 @@ The implementation replaces the Python CLI as the supported workflow. PostgreSQL
 - **Persistence:** Store canonical UTF-8 Markdown and searchable report metadata/metrics. Do not persist raw Jira payloads. Enforce uniqueness for configured team + Monday week-start and make saved reports immutable.
 - **Operation:** Local single-user only, loopback-bound, no application login, no wildcard CORS, and no production deployment in v1.
 
+## Risk-Adjusted Execution Strategy
+
+Phase headings describe capability areas; they are not a strict serial schedule. Execute the tasks in `spec/tasks.md` by dependency-aware waves:
+
+1. Start with low-risk, high-gain foundations: workspace/test scripts (T001), configuration and secret-boundary validation (T003), and pure timezone/report-period/status rules (T013).
+2. Establish the local runtime and persistence baseline (T002, T004, T005, T006).
+3. Resolve the highest external uncertainty early with a bounded Jira endpoint/permission feasibility check as the first part of T007. Then implement pagination and source collectors (T008-T011) before orchestration (T012).
+4. Complete report formatting, API contract, and backend workflows (T014-T019), then deliver the UI (T020-T024).
+5. Run operational, quality, performance, and documentation gates (T025-T028).
+
+Continue static checks and unit tests throughout delivery. Do not begin work whose prerequisite acceptance criteria are failing; independent tasks inside a wave may run in parallel. Final dependency edges are listed in `spec/tasks.md`.
+
 ## Phases and Milestones
 
 ### Phase 1 — Application foundation and configuration

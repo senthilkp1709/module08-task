@@ -1,21 +1,37 @@
-# Weekly Status Report Generator (module08-task)
+# Jira Weekly Status Reports
 
-## Usage
+The supported application is being built as a React 18 + Vite frontend, a Node.js 22 LTS + Express backend, and a PostgreSQL 15 data store. This workspace is the initial application scaffold; report generation and Docker orchestration are added by later implementation tasks.
 
-Generate the current week's report:
+## Prerequisites
 
+- Node.js 22 LTS
+- npm 10 or later
+
+## Workspace commands
+
+Run these commands from this directory:
+
+```sh
+npm install
+npm run dev
 ```
-python main.py --team "Staff Aug Delivery Team" --prepared-by "Senthil Kumar"
-```
 
-Flags:
-- `--team` (required) — team/engagement name.
-- `--prepared-by` (required) — report author.
-- `--week-start` — Monday of the report week (`YYYY-MM-DD`). Defaults to the most recent Monday.
-- `--executive-summary` — one or two sentence overall health summary.
-- `--risks-file` — path to the risks input file. Defaults to `risks-this-week.md`.
-- `--env-file` — path to the `.env` file with Jira credentials. Defaults to `.env`.
-- `--out-dir` — directory to write the dated report into. Defaults to `reports`.
-- `--force` — overwrite an existing report for the week instead of failing.
+`npm run dev` starts the backend and frontend. During this scaffold stage, the Vite frontend is at `http://127.0.0.1:5173` and the API scaffold is at `http://127.0.0.1:3001`.
 
-Output is written to `<out-dir>/status-report-YYYY-MM-DD.md` (date = week start Monday). The run fails if that file already exists unless `--force` is passed.
+Individual workspace scripts:
+
+| Workspace | Development | Build/check | Lint | Test |
+|---|---|---|---|---|
+| Frontend | `npm run dev --workspace @weekly-status/frontend` | `npm run build --workspace @weekly-status/frontend` | `npm run lint --workspace @weekly-status/frontend` | `npm run test --workspace @weekly-status/frontend` |
+| Backend | `npm run dev --workspace @weekly-status/backend` | `npm run build --workspace @weekly-status/backend` | `npm run lint --workspace @weekly-status/backend` | `npm run test --workspace @weekly-status/backend` |
+
+Root-level checks are available with `npm run build`, `npm run lint`, and `npm test`.
+
+## Workspace layout
+
+- `frontend/` — React/Vite browser application.
+- `backend/` — Express API application.
+- `packages/contracts/` — shared JSON Schema contract used by both workspaces.
+- `spec/` — project constitution, specification, implementation plan, tasks, and reviews.
+
+This web application replaces the previous Python CLI workflow. CLI compatibility and import of prior filesystem reports are not part of the initial release. Do not place Jira credentials in frontend files; backend configuration and Docker setup are added in subsequent tasks.
